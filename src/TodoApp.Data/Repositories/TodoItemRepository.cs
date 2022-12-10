@@ -2,7 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using TodoApp.Core.Common.Pagination;
-using TodoApp.Core.Dtos;
+using TodoApp.Core.Dtos.Todos;
 using TodoApp.Core.Entities;
 using TodoApp.Core.Repositories;
 
@@ -20,46 +20,40 @@ public class TodoItemRepository : ITodoItemRepository
     }
 
 
-    public Task<IEnumerable<TodoItem>> GetAllAsync()
+    public async  Task<IEnumerable<TodoItem>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await _dataContext.TodoItems.ToListAsync();
     }
 
-    public Task<TodoItem> GetByIdAsync(int id)
+    public async Task<TodoItem> GetByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        return await _dataContext.TodoItems.FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public void Update(TodoItem entity)
     {
-        throw new NotImplementedException();
+        entity.Updated = DateTime.Now;
+        _dataContext.Entry(entity).State = EntityState.Modified;
     }
 
     public void Add(TodoItem entity)
     {
-        throw new NotImplementedException();
+        _dataContext.TodoItems.Add(entity);
     }
 
     public void Delete(TodoItem entity)
     {
-        throw new NotImplementedException();
+        _dataContext.TodoItems.Remove(entity);
     }
 
-    public async Task<PagedList<TodoItemDto>> SearchAsync(TodoSearchParams parameters)
+    public async Task<PagedList<TodoItemDto>> SearchForUserAsync(AppUser user, TodoSearchParams parameters)
     {
-        var query = _dataContext.TodoItems.AsQueryable();
-
-        if (!string.IsNullOrEmpty(parameters.AppUserId))
-            query = query.Where(x => x.AppUser.Id == parameters.AppUserId);
+        var query = _dataContext.TodoItems.AsQueryable().Where(x => x.AppUser == user);
 
         if (!string.IsNullOrEmpty(parameters.Query))
             query = query.Where(x => x.Title.Contains(parameters.Query, StringComparison.InvariantCultureIgnoreCase) ||
                                      x.Description.Contains(parameters.Query,
                                          StringComparison.InvariantCultureIgnoreCase));
-
-        if (parameters.CategoryId != null)
-            query = query.Where(x => x.Category.Id == parameters.CategoryId);
-
 
         if (parameters.StatusIds != null && parameters.StatusIds.Any())
             query = query.Where(x => parameters.StatusIds.Contains(x.StatusId));
@@ -69,4 +63,5 @@ public class TodoItemRepository : ITodoItemRepository
                     .ConfigurationProvider).AsNoTracking(),
             parameters.PageNumber, parameters.PageSize);
     }
+    
 }

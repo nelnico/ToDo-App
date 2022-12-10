@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-sm-4" *ngFor="let item of model">
+
+    <div class="card">
+      <div class="card-header">
+        Priority: {{ item.priority }}, Status: {{ item.status }}
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">{{ item.title }}</h5>
+        <p class="card-text">{{ item.description }}</p>
+        <a [routerLink]="[item.id]" class="btn btn-primary me-1">Details</a>
+        <a [routerLink]="[item.id,'edit']" class="btn btn-primary me-1">Edit</a>
+        <a href="#" (click)="onDelete(item)" class="btn btn-primary me-1">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>

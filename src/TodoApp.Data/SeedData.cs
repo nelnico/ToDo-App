@@ -41,11 +41,13 @@ public static class SeedData
             {
                 UserName = userToCreate.Email,
                 EmailConfirmed = true,
-                PhoneNumberConfirmed = true
+                PhoneNumberConfirmed = true,
+                IsActive = true
             };
             await userManager.CreateAsync(user, userToCreate.Password);
             await userManager.AddToRoleAsync(user, userToCreate.Role);
         }
+        
     }
 }
 

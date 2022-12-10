@@ -1,0 +1,28 @@
+// * {
+//    box-sizing: border-box;
+// }
+
+// html, body {
+//    height: 100%;
+// }
+// body {
+//    margin: 0;
+// }
+
+// .app-container {
+//    height: 100%;
+//    display: grid;
+//    gap: 4px;
+//    grid-template-columns: 8em auto 15em;
+//    grid-template-rows: min-content auto min-content;
+//    background-color: lightgoldenrodyellow;
+
+//    header, footer {
+//       grid-column-start: 1;
+//       grid-column-end: 4;
+//       background-color: lightgreen;
+//    }
+//    nav, aside {
+//       background-color: lightcoral;
+//    }
+// }

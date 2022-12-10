@@ -1,0 +1,55 @@
+<div class="container">
+  <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+    <a routerLink="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+      <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+      <span class="fs-4">ToDo App</span>
+    </a>
+
+    <ul class="nav nav-pills">
+
+      <li class="nav-item">
+        <a  routerLink="about" class="nav-link"  routerLinkActive="active">About</a>
+      </li>
+        <li class="nav-item">
+          <a  routerLink="todos" class="nav-link"  routerLinkActive="active">To Do's</a>
+        </li>
+        <li class="nav-item">
+          <a  routerLink="users" class="nav-link"  routerLinkActive="active">Users</a>
+        </li>
+        <li class="nav-item">
+          <a  routerLink="profile" class="nav-link"  routerLinkActive="active">My Profile</a>
+        </li>
+
+      <ng-container *ngIf="!(accountService.currentUser$ | async)">
+        <li class="nav-item">
+          <a  routerLink="auth/login" class="nav-link"  routerLinkActive="active">Log In</a>
+        </li>
+      </ng-container>
+      <ng-container *ngIf="accountService.currentUser$ | async as user">
+
+        <li class="nav-item">
+          <a href="#" (click)="onLogout()" class="nav-link">Log Out {{user.role}}</a>
+        </li>
+      </ng-container>
+    </ul>
+  </header>
+</div>
+
+
+<!-- <div class="header-container">
+  <a routerLink="/">Home</a>
+
+  <a  routerLink="todos">My Todos</a>
+  <a  routerLink="profile">My Profile</a>
+  <ng-container *ngIf="accountService.currentUser$ | async as user">
+
+
+    <a class="push" href="#" (click)="onAddTodo()">Add ToDo</a>
+    <a href="#" (click)="onLogout()">Log Out</a>
+  </ng-container>
+  <ng-container *ngIf="!(accountService.currentUser$ | async)">
+    <a class="push" routerLink="auth/login">Log In</a>
+    <a routerLink="auth/register">Register</a>
+  </ng-container>
+</div> -->
+

@@ -1,0 +1,26 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <h1>Log In to view your notes</h1>
+    <div>
+        <label>Email</label>
+        <input type="email"  autocomplete="new-emailAddress" formControlName="emailAddress">
+    </div>
+    <div>
+        <label>Password</label>
+        <input type="password"  autocomplete="new-password"  formControlName="password">
+    </div>
+    <div>
+        <button type="submit" [disabled]="!loginForm.valid">Log In</button>
+    </div>
+    <div>
+        Dont have an account?  <a routerLink="/auth/register">Register here</a>
+    </div>
+</form>
+
+<ul>
+    <li>
+        <a href="#" (click)="setCreds('user')">User</a>
+    </li>
+    <li>
+        <a href="#" (click)="setCreds('admin')">Admin</a>
+    </li>
+</ul>

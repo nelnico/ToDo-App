@@ -25,7 +25,6 @@ namespace TodoApp.Api.Common.Extensions
                 opt.AddPolicy(policyName, corsPolicyBuilder =>
                 {
                     corsPolicyBuilder
-                        //.AllowAnyOrigin()
                         .WithOrigins("https://localhost:4200")
                         .AllowCredentials()
                         .AllowAnyHeader()
