@@ -1,26 +1,28 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <h1>Log In to view your notes</h1>
-    <div>
-        <label>Email</label>
-        <input type="email"  autocomplete="new-emailAddress" formControlName="emailAddress">
-    </div>
-    <div>
-        <label>Password</label>
-        <input type="password"  autocomplete="new-password"  formControlName="password">
-    </div>
-    <div>
-        <button type="submit" [disabled]="!loginForm.valid">Log In</button>
-    </div>
-    <div>
-        Dont have an account?  <a routerLink="/auth/register">Register here</a>
-    </div>
-</form>
+<div class="row">
+    <div class="col-4 offset-4">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+                <label class="form-label">Email Address</label>
+                <input type="email" class="form-control"  autocomplete="new-emailAddress" formControlName="emailAddress">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password"  class="form-control"  autocomplete="new-password"  formControlName="password">
+              </div>
 
-<ul>
-    <li>
-        <a href="#" (click)="setCreds('user')">User</a>
-    </li>
-    <li>
-        <a href="#" (click)="setCreds('admin')">Admin</a>
-    </li>
-</ul>
+              <div class="mb-3">
+                <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Sign in</button>
+              </div>
+              <div class="mb-3">
+                Dont have an account?  <a routerLink="/auth/register">Register here</a>
+              </div>
+              <div>
+                <small>
+                    <a href="#" (click)="setCreds('user')">User Login</a>
+                    <br>
+                    <a href="#" (click)="setCreds('admin')">Admin Login</a>
+                </small>
+              </div>
+        </form>
+    </div>
+</div>

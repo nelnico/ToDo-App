@@ -11,40 +11,90 @@ import { TodoService } from 'src/app/_services/todo.service';
   styleUrls: ['./todos.component.scss'],
 })
 export class TodosComponent implements OnInit {
+
+  isEditing: boolean = false;
+  editToDo: TodoItem;
+
   model: TodoItem[] = [];
   pagination: Pagination;
   searchParams: TodoSearchParams = new TodoSearchParams();
 
-  constructor(private todoService: TodoService) {}
+  constructor(private todoService: TodoService) { }
 
   ngOnInit(): void {
-   this.findTodos();
+    this.findTodos();
   }
 
   findTodos() {
     this.todoService
-    .getTodoItems(this.searchParams)
-    .subscribe((result: PaginatedResult<TodoItem[]>) => {
-      console.log(result);
-      this.pagination = result.pagination;
-      this.model = result.result;
-    });
+      .getTodoItems(this.searchParams)
+      .subscribe((result: PaginatedResult<TodoItem[]>) => {
+        console.log(result);
+        this.pagination = result.pagination;
+        this.model = result.result;
+      });
   }
+
   onDelete(todoItem: TodoItem) {
-    if(confirm(`Are you sure you want to delete ${todoItem.title}`)) {
+    if (confirm(`Are you sure you want to delete ${todoItem.title}`)) {
       this.todoService.deleteTodoItem(todoItem.id).subscribe({
         next: () => {
-          alert("deleted");
-          this.findTodos();
         },
         error: (error) => {
-            alert(error);
+          alert(error);
         },
         complete: () => {
-         alert("done")
+          this.findTodos();
         },
       });
     }
     return false;
+  }
+
+  onEdit(todoItem: TodoItem) {
+    this.editToDo = todoItem;
+    this.isEditing = true;
+    return false;
+  }
+
+  onCancelEdit() {
+    this.editToDo = null;
+    this.isEditing = false;
+  }
+
+  onCreateTodo() {
+    this.isEditing = true;
+  }
+
+  onSaveTodo(event: TodoItem) {
+    if (event.id) {
+      this.todoService.upateTodoItem(event).subscribe({
+        next: () => {
+          this.findTodos();
+        },
+        error: (error) => {
+          alert(error);
+        },
+        complete: () => {
+          this.isEditing = false;
+          this.editToDo = null;
+        },
+      });
+    } else {
+      this.todoService.createTodoItem(event).subscribe({
+        next: () => {
+          this.findTodos();
+        },
+        error: (error) => {
+          alert(error);
+        },
+        complete: () => {
+          this.isEditing = false;
+          this.editToDo = null;
+        },
+      });
+    }
+
+
   }
 }

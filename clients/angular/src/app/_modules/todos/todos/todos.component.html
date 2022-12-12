@@ -1,17 +1,42 @@
 <div class="row">
-  <div class="col-sm-4" *ngFor="let item of model">
+  <div class="col-6 offset-3">
+    <div class="d-grid">
+      <button class="btn btn-primary" type="button" (click)="onCreateTodo()">Add Todo</button>
+    </div>
 
-    <div class="card">
-      <div class="card-header">
-        Priority: {{ item.priority }}, Status: {{ item.status }}
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">{{ item.title }}</h5>
-        <p class="card-text">{{ item.description }}</p>
-        <a [routerLink]="[item.id]" class="btn btn-primary me-1">Details</a>
-        <a [routerLink]="[item.id,'edit']" class="btn btn-primary me-1">Edit</a>
-        <a href="#" (click)="onDelete(item)" class="btn btn-primary me-1">Delete</a>
+    <ng-container *ngIf="!model || model.length ===0">
+      <h3  class="text-center m-3">You have no ToDo's</h3>
+    </ng-container>
+
+    <ng-container *ngIf="isEditing">
+      <app-todo-item-edit
+        [todoItem]="editToDo"
+        (save)="onSaveTodo($event)"
+        (cancel)="onCancelEdit()"></app-todo-item-edit>
+    </ng-container>
+
+    <div class="row">
+      <div class="col-6" *ngFor="let item of model">
+        <div class="card mt-3" >
+          <div class="card-header">
+            Priority: {{ item.priority }}, Status: {{ item.status }}
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{ item.title }}</h5>
+            <p class="card-text">{{ item.description }}</p>
+            <a [routerLink]="[item.id]" class="btn btn-primary me-1">Details</a>
+            <a href="#" (click)="onEdit(item)" class="btn btn-primary me-1">Edit</a>
+            <a href="#" (click)="onDelete(item)" class="btn btn-primary me-1">Delete</a>
+          </div>
+        </div>
       </div>
     </div>
+
+
+
   </div>
+
+
+
+
 </div>

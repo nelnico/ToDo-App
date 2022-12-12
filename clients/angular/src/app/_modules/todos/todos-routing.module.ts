@@ -12,10 +12,6 @@ const routes: Routes = [
   {
     path: ':id',
     component: TodoItemDetailsComponent
-  },
-  {
-    path: ':id/edit',
-    component: TodoItemEditComponent
   }
 ];
 

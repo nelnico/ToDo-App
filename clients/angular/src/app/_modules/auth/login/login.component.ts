@@ -13,6 +13,7 @@ export class LoginComponent {
     private accountService: AccountService,
     private router: Router
   ) {}
+
   loginForm = new FormGroup({
     emailAddress: new FormControl(null, [Validators.required]),
     password: new FormControl(null, [Validators.required]),
